@@ -5,15 +5,15 @@ node('master') {
             mvnhome=tool 'M3'
     }
     stage('Build & Unit test'){
-            sh '${mvnhome}/bin/mvn clean verify -DskipITs=true';
+            sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/M3/bin/mvn clean verify -DskipITs=true';
             junit '**/target/surefire-reports/TEST-*.xml'
             archive 'target/*.jar'
     }
     stage('Static Code Analysis'){
-            sh '${mvnhome}/bin/mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
+            sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/M3/bin/mvn clean verify sonar:sonar -Dsonar.projectName=example-project -Dsonar.projectKey=example-project -Dsonar.projectVersion=$BUILD_NUMBER';
     }
     stage ('Integration Test'){
-            sh '${mvnhome}/bin/mvn clean verify -Dsurefire.skip=true';
+            sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/M3/bin/mvn clean verify -Dsurefire.skip=true';
             junit '**/target/failsafe-reports/TEST-*.xml'
             archive 'target/*.jar'
     }
